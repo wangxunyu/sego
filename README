@@ -1,0 +1,68 @@
+
+Introduction
+============
+
+This is a Chinese word segment programme based on MMSEG (Maximum
+Matching SEGment) algorithm:
+    Tsai, C. H. (1996). MMSEG: A Word Identification System for
+    Mandarin Chinese Text Based on Two Variations of the Maximum
+    Matching Algorithm. Unpublished manuscript, University of
+    Illinois at Urbana-Champain.
+Only the first three rules are applied, which are grammar based
+rules. The last rule was cut off, that is a statistic related
+rule which pre-learning is needed. By the way, the contribution
+of the last rule is not very significant. For real time purpose,
+a Trie Tree algorithm was introduced to produce a whole sequence
+of prefix matching. As tested on my laptop, more than 4MB/s text
+were processed.
+
+File list
+=========
+
+  o README          this file
+  o COPYRIGHT       a 2-clause BSD License
+  o TODO            a TODO list
+  o Makefile        makefile to compile source code
+  o my.big5.dict    a word list (big5) modified version from MMSEG
+  o my.gb.dict      a word list (gb2312) converted from above
+  o demo.big5.txt   some testing sentence (big5)
+  o demo.gb.txt     some testing sentence (gb2312)
+  o trie.h          header of trie.c
+  o trie.c          Trie Tree algorithm source code
+  o mmsegrule.h     header of mmsegrule.c
+  o mmsegrule.c     source code for maximum matching rules
+  o mmseg.h         header of mmseg.c
+  o mmseg.c         source code for maximum matching algorithm
+  o seg.c           a simple app to apply MMSEG to segment words
+
+Install
+=======
+
+The default install prefix is /usr/local which was defined in
+Makefile, if you want intall the programme to other location,
+edit makefile and change the variable PREFIX. As a simplified
+project, there is no configure, so only two steps to install:
+
+  # make
+  # make install
+
+You'd better have the root privilege to run above steps,
+otherwise change a PREFIX that you have the right to write.
+This will install a simple app ``seg'' to /usr/local/bin and
+two word lists file to /usr/local/lib/. After installing,
+you can run the programme as:
+
+  # seg < demo.big5.txt
+
+Make sure your terminal supported what you processed, or
+redirect the output to a file and view the result using other
+viewers. If you want to show the process time (i.e. verbose
+mode) and using other dictionary, then:
+
+  # seg -v -d /where/other/dictionary < demo.big5.txt
+
+The format of the dictionary file is simple, just one line
+one word. Big5 and GB2312 charsets are supported now. Of
+cause, big5 dictionary for big5 text and gb2312 dictionary
+for gb2312 text.
+
