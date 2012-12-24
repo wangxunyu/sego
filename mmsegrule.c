@@ -91,6 +91,8 @@ int mmseg_attr_choose(gram_attr_t *ga) {
     int i, j, k;
     int idxmaxlen[MAX_SEGS];
     int idxmaxave[MAX_SEGS];
+    int minv = 1000000;
+    int ii, v;
 
     j = 0;
     for (i=0; i<ga->n; i++)
@@ -102,9 +104,13 @@ int mmseg_attr_choose(gram_attr_t *ga) {
         if (ga->ave[idxmaxlen[i]] == ga->maxave)
             idxmaxave[k++] = i;
     if (k<=1) return ga->first[idxmaxave[0]];     /* rule 2 */
-    for (i=0; i<k; i++)
-        if (ga->var[idxmaxave[i]] == ga->minvar)
-            return ga->first[i];                  /* rule 3 */
-    /* something wrong */
-    return 0;
+    ii = 0;
+    for (i=0; i<k; i++) {
+        v = ga->var[idxmaxave[i]];
+        if (v < minv) {
+            ii = i;
+            minv = v;
+        }
+    }
+    return ga->first[idxmaxave[ii]];                  /* rule 3 */
 }
