@@ -2,7 +2,7 @@
 
 CC = gcc
 PREFIX = /usr/local
-CFLAGS = -I. -O3
+CFLAGS = -I.
 OBJ = seg.o trie.o mmseg.o mmsegrule.o
 BINOBJ = seg
 DICT = my.big5.dict my.gb.dict
